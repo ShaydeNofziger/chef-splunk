@@ -24,10 +24,17 @@
 include_recipe 'chef-splunk::user'
 include_recipe 'chef-splunk::install_forwarder'
 
-splunk_servers = search( # ~FC003
-  :node,
-  "splunk_is_server:true AND chef_environment:#{node.chef_environment}"
-).sort! do
+# Get Splunk servers from attributes, or by searching Chef server
+# if they are not explicitly configured via attributes.
+if node['splunk']['servers']
+  splunk_servers = node['splunk']['servers']
+else
+  splunk_servers = search( # ~FC003
+                          :node,
+                          "splunk_is_server:true AND chef_environment:#{node.chef_environment}"
+                         )
+end
+splunk_servers.sort! do
   |a, b| a.name <=> b.name
 end
 

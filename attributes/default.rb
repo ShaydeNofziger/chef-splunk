@@ -20,6 +20,10 @@ default['splunk']['is_server']      = false
 default['splunk']['receiver_port']  = '9997'
 default['splunk']['web_port']       = '443'
 
+# Assume Splunk server will be auto-detected via Chef Search.
+# Override to a list of servers to specify explicitly.
+default['splunk']['servers'] = nil
+
 default['splunk']['user'] = {
   'username' => 'splunk',
   'comment'  => 'Splunk Server',
