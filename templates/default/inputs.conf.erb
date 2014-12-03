@@ -1,5 +1,8 @@
 [default]
 host = <%= @inputs_conf['host'] %>
+<% if @inputs_conf['tzhint'] %>
+_tzhint = <%= @inputs_conf['tzhint'] %>
+<% end %>
 
 <% @inputs_conf['ports'].each do |port| -%>
 [tcp://:<%= port['port_num'] %>]
@@ -7,3 +10,11 @@ host = <%= @inputs_conf['host'] %>
 <%= name %> = <%= value %>
   <% end -%>
 <% end -%>
+
+<% @inputs_conf['monitors'].each do |monitor| -%>
+[monitor://<%= monitor['path'] %>]
+  <% monitor['config'].each_pair do |name, value| -%>
+<%= name %> = <%= value %>
+  <% end -%>
+<% end -%>
+
