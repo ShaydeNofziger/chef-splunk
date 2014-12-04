@@ -34,7 +34,7 @@ else
                           "splunk_is_server:true AND chef_environment:#{node.chef_environment}"
                          )
 end
-splunk_servers.sort! do
+splunk_servers = splunk_servers.sort do
   |a, b| a.name <=> b.name
 end
 
